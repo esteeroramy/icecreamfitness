@@ -44,7 +44,7 @@
         android:layout_marginTop="15dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="15dp" />
+        android:layout_marginEnd="15dp"/>
 
     <Button
         android:background="@drawable/ic_profile"
@@ -56,6 +56,6 @@
         android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"
         android:layout_toLeftOf="@+id/settings_button"
-        android:layout_toStartOf="@+id/settings_button" />
+        android:layout_toStartOf="@+id/settings_button"/>
 
 </RelativeLayout>

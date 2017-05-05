@@ -6,6 +6,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class Progress extends AppCompatActivity {
@@ -41,5 +43,24 @@ public class Progress extends AppCompatActivity {
                 return true;
             }
         });
+
+        final Button settings = (Button) findViewById(R.id.settings_button);
+        settings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i;
+                i = new Intent(Progress.this, Settings.class);
+                startActivity(i);
+            }
+        });
+
+        final Button profile = (Button) findViewById(R.id.profile_button);
+        profile.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i;
+                i = new Intent(Progress.this, Profile.class);
+                startActivity(i);
+            }
+        });
+
     }
 }
