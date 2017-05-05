@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class login extends AppCompatActivity {
 
@@ -39,20 +43,29 @@ public class login extends AppCompatActivity {
             final Button login = (Button) findViewById(R.id.login);
             login.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //TODO: some extra checks on the input information
+
                     final EditText username = (EditText) findViewById(R.id.username);
                     final EditText password = (EditText) findViewById(R.id.password);
-                    if (dbManager.login(username.getText().toString(), password.getText().toString())) {
+
+                    String error;
+
+                    if (username.getText().toString().trim().isEmpty()) {
+                        error = "Username Is Required";
+                    } else if (password.getText().toString().trim().isEmpty()){
+                        error = "Password Is Required";
+                    } else if (dbManager.login(username.getText().toString(), password.getText().toString())) {
+                        error = "";
                         Intent i;
                         i = new Intent(login.this, Home.class);
                         startActivity(i);
                     } else {
-                        //login failed TODO: tell the user something
+                        error = "Invalid Login";
                     }
+
+                    final TextView err = (TextView) findViewById(R.id.errorText);
+                    err.setText(error);
                 }
             });
-
-
         }
     }
 

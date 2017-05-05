@@ -25,7 +25,7 @@ import android.content.ContentValues;
 
 public class DBManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "fitness.db";
 
     //This is the users table
@@ -58,14 +58,29 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     //FUNCTIONS FOR THE USERS TABLE
-    public void addUser(users user) {
-        ContentValues values = new ContentValues();
-        values.put(users_user, user.get_user());
-        values.put(users_pass, user.get_pass());
-        values.put(users_email, user.get_email());
+    public boolean addUser(users user) {
+        if (! userExists(user.get_user())) {
+            ContentValues values = new ContentValues();
+            values.put(users_user, user.get_user());
+            values.put(users_pass, user.get_pass());
+            values.put(users_email, user.get_email());
+            SQLiteDatabase db = getWritableDatabase();
+            db.insert(TABLE_USERS, null, values);
+            db.close();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean userExists(String user) {
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_USERS, null, values);
-        db.close();
+        System.out.println("testing");
+        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + users_user + "=\"" + user + "\";";
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        return (c.getCount() == 1);
     }
 
     public boolean login(String user, String pass) {

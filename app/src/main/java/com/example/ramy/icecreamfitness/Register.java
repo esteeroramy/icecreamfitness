@@ -1,11 +1,17 @@
 package com.example.ramy.icecreamfitness;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity {
 
@@ -36,16 +42,39 @@ public class Register extends AppCompatActivity {
                 final EditText cpassword = (EditText) findViewById(R.id.cpassword);
                 final EditText email = (EditText) findViewById(R.id.email);
 
-                //TODO: add more checks for the information
-                if (password.getText().toString().equals(cpassword.getText().toString() )) {
+                String error;
+
+                Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+                Matcher m = p.matcher(email.getText().toString());
+                boolean matchFound = m.matches();
+
+                if (username.getText().toString().trim().isEmpty()) {
+                    error = "Username Is Required";
+                } else if (password.getText().toString().trim().isEmpty()){
+                    error = "Password Is Required";
+                } else if (cpassword.getText().toString().trim().isEmpty()){
+                    error = "Confirm Password Is Required";
+                } else if (email.getText().toString().trim().isEmpty()) {
+                    error = "Email Is Required";
+                } else if (!matchFound) {
+                    error = "Email Format is not Valid";
+                } else if (password.getText().toString().equals(cpassword.getText().toString() )) {
+                    error = "";
                     users myUser = new users(username.getText().toString(), password.getText().toString(), email.getText().toString());
-                    dbManager.addUser(myUser);
-                    Intent i;
-                    i = new Intent(Register.this, login.class);
-                    startActivity(i);
+                    boolean out = dbManager.addUser(myUser);
+                    if (out) {
+                        Intent i;
+                        i = new Intent(Register.this, login.class);
+                        startActivity(i);
+                    } else {
+                        error = "Username In Use";
+                    }
                 } else {
-                    //password and cpassword do not match TODO: put some error
+                    error = "Passwords do not Match";
                 }
+
+                final TextView err = (TextView) findViewById(R.id.errorText);
+                err.setText(error);
             }
         });
     }
