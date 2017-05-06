@@ -20,8 +20,16 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+        //TODO: add "forgot credentials" option send to their email
+        //TODO: add logout button in profile, to remove from logged in
+        //TODO: 10% less option??
 
         boolean loggedIn = false;
+
+        dbManager = new DBManager(this, null, null, 1);
+        if (!dbManager.loggedin().equals("NONE")) {
+            loggedIn = true;
+        }
 
         if (loggedIn) {
             Intent i;

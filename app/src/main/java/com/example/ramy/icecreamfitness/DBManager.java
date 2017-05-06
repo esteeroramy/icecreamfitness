@@ -8,13 +8,16 @@ package com.example.ramy.icecreamfitness;
 DATABASE SCHEMA
 
 users (user, pass, email)
+loggedin (user)
+
+excer (name)
 workouts (name, days)
 workdetails (name, day, excer, sets, reps, inc)
 userwork (user, workout)
 userdata (workout, excer, set, reps, date)
 userworkout (name, day, date)
 weight (user, weight, date)
-loggedin (user)
+
  */
 
 import android.database.sqlite.SQLiteDatabase;
@@ -25,7 +28,7 @@ import android.content.ContentValues;
 
 public class DBManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 10;
     private static final String DATABASE_NAME = "fitness.db";
 
     //This is the users table
@@ -34,6 +37,16 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String users_user = "user";
     public static final String users_pass = "pass";
     public static final String users_email = "email";
+
+    //This is the loggedin table
+    public static final String TABLE_LOGGEDIN = "loggedin";
+    public static final String loggedin_id = "_id";
+    public static final String loggedin_user = "user";
+
+    //This is the exer table
+    public static final String TABLE_EXER = "exer";
+    public static final String exer_id = "_id";
+    public static final String exer_name = "name";
 
     public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -49,11 +62,31 @@ public class DBManager extends SQLiteOpenHelper {
                 users_email + " TEXT" +
                 ");";
         db.execSQL(query);
+
+        query = "CREATE TABLE " + TABLE_LOGGEDIN + "(" +
+                loggedin_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                loggedin_user + " TEXT" +
+                ");";
+        db.execSQL(query);
+
+        query = "CREATE TABLE " + TABLE_EXER + "(" +
+                exer_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                exer_name + " TEXT" +
+                ");";
+        db.execSQL(query);
+
+        ContentValues values = new ContentValues();
+        values.put(exer_name, "a");
+        values.put(exer_name, "b");
+        values.put(exer_name, "c");
+        db.insert(TABLE_EXER, null, values);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGGEDIN);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXER);
         onCreate(db);
     }
 
@@ -74,7 +107,6 @@ public class DBManager extends SQLiteOpenHelper {
 
     private boolean userExists(String user) {
         SQLiteDatabase db = getWritableDatabase();
-        System.out.println("testing");
         String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + users_user + "=\"" + user + "\";";
 
         Cursor c = db.rawQuery(query, null);
@@ -91,6 +123,51 @@ public class DBManager extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
 
-        return (c.getCount() == 1);
+        if (c.getCount() == 1) {
+            query = "DELETE FROM " + TABLE_LOGGEDIN + ";";
+            db.execSQL(query);
+
+            ContentValues values = new ContentValues();
+            values.put(loggedin_user, user);
+            db.insert(TABLE_LOGGEDIN, null, values);
+            db.close();
+            return true;
+        } else {
+            db.close();
+            return false;
+        }
     }
+
+    //FUNCTIONS FOR THE LOGGEDIN TABLE
+    public String loggedin() {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_LOGGEDIN + ";";
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        if (c.getCount() == 1) {
+            return c.getString(c.getColumnIndex(loggedin_user));
+        } else {
+            return "NONE";
+        }
+    }
+
+    public void logout() {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_LOGGEDIN + ";";
+        db.execSQL(query);
+    }
+
+    //FUNCTIONS FOR THE EXER TABLE
+    public void addExers() {
+        ContentValues values = new ContentValues();
+        values.put(exer_name, "a");
+        //values.put(exer_name, "b");
+        //values.put(exer_name, "c");
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_EXER, null, values);
+        db.close();
+    }
+
 }
