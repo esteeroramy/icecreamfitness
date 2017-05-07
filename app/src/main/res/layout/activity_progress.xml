@@ -40,28 +40,4 @@
         android:padding="15dp"
         android:id="@+id/textView" />
 
-    <Button
-        android:background="@drawable/ic_settings"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginRight="10dp"
-        android:id="@+id/settings_button"
-        android:title="Settings"
-        android:layout_marginTop="15dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="15dp"/>
-
-    <Button
-        android:background="@drawable/ic_profile"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:id="@+id/profile_button"
-        android:title="Profile"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_toLeftOf="@+id/settings_button"
-        android:layout_toStartOf="@+id/settings_button"/>
-
 </RelativeLayout>

@@ -44,23 +44,5 @@ public class Progress extends AppCompatActivity {
             }
         });
 
-        final Button settings = (Button) findViewById(R.id.settings_button);
-        settings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i;
-                i = new Intent(Progress.this, Settings.class);
-                startActivity(i);
-            }
-        });
-
-        final Button profile = (Button) findViewById(R.id.profile_button);
-        profile.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i;
-                i = new Intent(Progress.this, Profile.class);
-                startActivity(i);
-            }
-        });
-
     }
 }

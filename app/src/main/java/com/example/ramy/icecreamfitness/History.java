@@ -44,24 +44,5 @@ public class History extends AppCompatActivity {
                 return true;
             }
         });
-
-        final Button settings = (Button) findViewById(R.id.settings_button);
-        settings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i;
-                i = new Intent(History.this, Settings.class);
-                startActivity(i);
-            }
-        });
-
-        final Button profile = (Button) findViewById(R.id.profile_button);
-        profile.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i;
-                i = new Intent(History.this, Profile.class);
-                startActivity(i);
-            }
-        });
-
     }
 }

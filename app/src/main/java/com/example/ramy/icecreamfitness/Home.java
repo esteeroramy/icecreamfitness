@@ -2,6 +2,8 @@ package com.example.ramy.icecreamfitness;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.AppBarLayout;
@@ -22,67 +24,83 @@ import android.view.View;
 
 import android.widget.*;
 
+import java.util.ArrayList;
+
 public class Home extends AppCompatActivity {
+
+    DBManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        dbManager = new DBManager(this, null, null, 1);
+
+        ArrayList<String> theWorkouts = dbManager.getUserWorkouts(dbManager.loggedin());
 
 
-        //Set up the information for the previous workout
-        RelativeLayout myLayout = (RelativeLayout)findViewById(R.id.prev);
-        TextView headder = new TextView(this);
-        headder.setText("Previous"); //the title
-        headder.setTextSize(26);
-        headder.setTextColor(Color.BLACK);
-        headder.setId(5);
-        RelativeLayout.LayoutParams headderLayout = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
+        RelativeLayout mainLayout = (RelativeLayout)findViewById(R.id.mainhere);
+        android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
 
-        TextView body = new TextView(this); //the dta to display TODO: could make it all vertical
-        body.setText("\n     asdfasdfasdf         asdfasdasdf" +
-                "\n     asdfasdfadsf         asdfasdfasdfa" +
-                "\n     asdasdasdasd       asdfasdfasdf");
-        body.setTextSize(14);
-        body.setTextColor(Color.BLACK);
-        body.setId(6);
-        RelativeLayout.LayoutParams bodyLayout = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        bodyLayout.addRule(RelativeLayout.BELOW, headder.getId());
-        myLayout.addView(headder, headderLayout);
-        myLayout.addView(body, bodyLayout);
+        RelativeLayout myLayout;
+        TextView headder;
+        RelativeLayout.LayoutParams headderLayout;
+        RelativeLayout.LayoutParams bigLayout;
+        ShapeDrawable rectShapeDrawable;
 
-        //The information for the next workout
-        RelativeLayout myLayout1 = (RelativeLayout)findViewById(R.id.next);
-        TextView headder1 = new TextView(this);
-        headder1.setText("Next"); //the title
-        headder1.setTextSize(26);
-        headder1.setTextColor(Color.BLACK);
-        headder1.setId(7);
-        RelativeLayout.LayoutParams headder1Layout = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
+        for (int i = 10; i < theWorkouts.size()+10; i++) {
+            //make the box
+            myLayout = new RelativeLayout(this);
+            myLayout.setId(i);
+            headder = new TextView(this);
+            //make the headder in it
+            headder.setText(theWorkouts.get(i-10));
+            headder.setTextSize(40);
+            headder.setTextColor(Color.WHITE);
+            //put it in the correct place
+            headderLayout = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            headderLayout.setMargins(0, 50, 0, 50);
+            headderLayout.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            myLayout.addView(headder, headderLayout);
 
-        TextView body1 = new TextView(this); //the information to display
-        body1.setText("\n     asdfasdfasdf         asdfasdasdf" +
-                "\n     asdfasdfadsf         asdfasdfasdfa" +
-                "\n     asdasdasdasd       asdfasdfasdf");
-        body1.setTextSize(14);
-        body1.setTextColor(Color.BLACK);
-        body1.setId(8);
-        RelativeLayout.LayoutParams body1Layout = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        body1Layout.addRule(RelativeLayout.BELOW, headder1.getId());
-        myLayout1.addView(headder1, headder1Layout);
-        myLayout1.addView(body1, body1Layout);
+            //set up the next step
+            myLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i;
+                    i = new Intent(Home.this, Dashboard.class);
+                    startActivity(i);
+                }
+            });
+
+            bigLayout = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            bigLayout.setMargins(20, 20, 20, 20);
+
+            //add it to the correct position
+            if (i == 10) {
+                bigLayout.addRule(RelativeLayout.BELOW, tb.getId());
+            } else {
+                bigLayout.addRule(RelativeLayout.BELOW, i-1);
+            }
+            myLayout.setPadding(8, 8, 8, 8);
+
+            rectShapeDrawable = new ShapeDrawable();
+            Paint paint = rectShapeDrawable.getPaint();
+
+            paint.setColor(getResources().getColor(R.color.colorPrimary));
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+            paint.setStrokeWidth(0);
+            myLayout.setBackgroundDrawable(rectShapeDrawable);
+            mainLayout.addView(myLayout, bigLayout);
+        }
+
 
         //The bottom navigation bar functionality
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -126,6 +144,13 @@ public class Home extends AppCompatActivity {
                 Intent i;
                 i = new Intent(Home.this, Profile.class);
                 startActivity(i);
+            }
+        });
+
+        final Button add = (Button) findViewById(R.id.adding);
+        add.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO: how can I add workouts?
             }
         });
 

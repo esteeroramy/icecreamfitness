@@ -4,38 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ramy.icecreamfitness.Home"
-    android:id="@+id/mainhere">
+    tools:context="com.example.ramy.icecreamfitness.Home">
 
 
-
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+    <RelativeLayout
+        android:id="@+id/prev"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@drawable/color_state"
-        app:itemTextColor="@drawable/color_state"
-        app:menu="@menu/menu_navigation"
-        />
+        android:background="#FFFFFF"
+        android:layout_margin="8dp"
+        android:elevation="4dp"
+        android:padding="8dp"
+        android:layout_below="@+id/my_toolbar"
+
+        >
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prev"
+        android:background="#FFFFFF"
+        android:layout_margin="8dp"
+        android:elevation="4dp"
+        android:padding="8dp"
+        >
+    </RelativeLayout>
 
 
 
-
-    <Button
-        android:id="@+id/adding"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:background="@drawable/round_button"
-        android:text="+"
-        android:textSize="50dp"
-        android:textColor="#fff"
-        android:layout_above="@+id/bottom_navigation"
-        android:layout_alignParentRight="true"
-        android:layout_margin="20dp"
-        />
 
 
     <android.support.v7.widget.Toolbar
@@ -47,7 +45,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dashboard"
+        android:text="WORKOUT NAME HERE"
         android:textColor="#FFFFFF"
         android:textSize="22dp"
         android:padding="15dp"
