@@ -24,20 +24,32 @@ import android.view.View;
 
 import android.widget.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Home extends AppCompatActivity {
 
     DBManager dbManager;
+    public static String workoutName;
+    public static String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //GETTING THE DATE AND TIME
+        //DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHH");
+        //Date date = new Date();
+        //System.out.println(dateFormat.format(date));
+
+
         dbManager = new DBManager(this, null, null, 1);
 
         ArrayList<String> theWorkouts = dbManager.getUserWorkouts(dbManager.loggedin());
-
+        user = dbManager.loggedin();
 
         RelativeLayout mainLayout = (RelativeLayout)findViewById(R.id.mainhere);
         android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
@@ -57,6 +69,7 @@ public class Home extends AppCompatActivity {
             headder.setText(theWorkouts.get(i-10));
             headder.setTextSize(40);
             headder.setTextColor(Color.WHITE);
+            headder.setId(9);
             //put it in the correct place
             headderLayout = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -70,6 +83,7 @@ public class Home extends AppCompatActivity {
             myLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    workoutName = ((TextView) v.findViewById(9)).getText().toString();
                     Intent i;
                     i = new Intent(Home.this, Dashboard.class);
                     startActivity(i);
@@ -80,7 +94,7 @@ public class Home extends AppCompatActivity {
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT
             );
-            bigLayout.setMargins(20, 20, 20, 20);
+            bigLayout.setMargins(20, 20, 20, 10);
 
             //add it to the correct position
             if (i == 10) {
@@ -93,7 +107,8 @@ public class Home extends AppCompatActivity {
             rectShapeDrawable = new ShapeDrawable();
             Paint paint = rectShapeDrawable.getPaint();
 
-            paint.setColor(getResources().getColor(R.color.colorPrimary));
+            //paint.setColor(getResources().getColor(R.color.colorPrimary));
+            paint.setColor(Color.DKGRAY);
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
             paint.setStrokeWidth(0);

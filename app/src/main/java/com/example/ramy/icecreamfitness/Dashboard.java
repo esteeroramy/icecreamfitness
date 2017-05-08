@@ -3,43 +3,56 @@ package com.example.ramy.icecreamfitness;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class Dashboard extends AppCompatActivity {
 
+    DBManager dbManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO: add workout name to the top
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        //Set up the information for the previous workout
-        RelativeLayout myLayout = (RelativeLayout)findViewById(R.id.prev);
-        TextView headder = new TextView(this);
-        headder.setText("Previous"); //the title
-        headder.setTextSize(26);
-        headder.setTextColor(Color.BLACK);
-        headder.setId(5);
-        RelativeLayout.LayoutParams headderLayout = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
+        TextView title = (TextView) findViewById(R.id.textView);
+        title.setText(Home.workoutName);
 
-        TextView body = new TextView(this); //the dta to display TODO: could make it all vertical
-        body.setText("\n     asdfasdfasdf         asdfasdasdf" +
-                "\n     asdfasdfadsf         asdfasdfasdfa" +
-                "\n     asdasdasdasd       asdfasdfasdf");
-        body.setTextSize(14);
-        body.setTextColor(Color.BLACK);
-        body.setId(6);
-        RelativeLayout.LayoutParams bodyLayout = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-        );
-        bodyLayout.addRule(RelativeLayout.BELOW, headder.getId());
-        myLayout.addView(headder, headderLayout);
-        myLayout.addView(body, bodyLayout);
+        dbManager = new DBManager(this, null, null, 1);
+        int lastDate = dbManager.getLastDate(Home.workoutName, Home.user);
+
+        if (lastDate != -1) {
+            //Set up the information for the previous workout
+            RelativeLayout myLayout = (RelativeLayout) findViewById(R.id.prev);
+            TextView headder = new TextView(this);
+            headder.setText("Previous"); //the title
+            headder.setTextSize(26);
+            headder.setTextColor(Color.BLACK);
+            headder.setId(5);
+            RelativeLayout.LayoutParams headderLayout = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            TextView body = new TextView(this); //the dta to display TODO: could make it all vertical
+            body.setText("\n     asdfasdfasdf         asdfasdasdf" +
+                    "\n     asdfasdfadsf         asdfasdfasdfa" +
+                    "\n     asdasdasdasd       asdfasdfasdf");
+            body.setTextSize(14);
+            body.setTextColor(Color.BLACK);
+            body.setId(6);
+            RelativeLayout.LayoutParams bodyLayout = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            bodyLayout.addRule(RelativeLayout.BELOW, headder.getId());
+            myLayout.addView(headder, headderLayout);
+            myLayout.addView(body, bodyLayout);
+        } else {
+            RelativeLayout myLayout = (RelativeLayout) findViewById(R.id.prev);
+            myLayout.setVisibility(View.GONE);
+        }
 
         //The information for the next workout
         RelativeLayout myLayout1 = (RelativeLayout)findViewById(R.id.next);
