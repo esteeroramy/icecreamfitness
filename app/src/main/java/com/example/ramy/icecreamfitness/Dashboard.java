@@ -1,6 +1,7 @@
 package com.example.ramy.icecreamfitness;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,10 +36,12 @@ public class Dashboard extends AppCompatActivity {
                     RelativeLayout.LayoutParams.WRAP_CONTENT
             );
 
+            //getting the information
+
+
             TextView body = new TextView(this); //the dta to display TODO: could make it all vertical
-            body.setText("\n     asdfasdfasdf         asdfasdasdf" +
-                    "\n     asdfasdfadsf         asdfasdfasdfa" +
-                    "\n     asdasdasdasd       asdfasdfasdf");
+            body.setTypeface(Typeface.MONOSPACE);
+            body.setText(dbManager.getLastExer(Home.user, lastDate, Home.workoutName));
             body.setTextSize(14);
             body.setTextColor(Color.BLACK);
             body.setId(6);
@@ -67,10 +70,9 @@ public class Dashboard extends AppCompatActivity {
         );
 
         TextView body1 = new TextView(this); //the information to display
-        body1.setText("\n     asdfasdfasdf         asdfasdasdf" +
-                "\n     asdfasdfadsf         asdfasdfasdfa" +
-                "\n     asdasdasdasd       asdfasdfasdf");
+        body1.setText(dbManager.getNextExer(Home.user, lastDate, Home.workoutName));
         body1.setTextSize(14);
+        body1.setTypeface(Typeface.MONOSPACE);
         body1.setTextColor(Color.BLACK);
         body1.setId(8);
         RelativeLayout.LayoutParams body1Layout = new RelativeLayout.LayoutParams(
