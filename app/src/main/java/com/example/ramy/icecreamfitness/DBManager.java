@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class DBManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 38;
+    private static final int DATABASE_VERSION = 41;
     private static final String DATABASE_NAME = "fitness.db";
 
     //This is the users table
@@ -334,6 +334,14 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userworkout_date, 2017050755);
         db.insert(TABLE_USERWORKOUT, null, values);
 
+        values.clear();
+        values.put(userworkout_user, "a");
+        values.put(userworkout_name, "workout1");
+        values.put(userworkout_day, 2);
+        values.put(userworkout_date, 2017050788);
+        db.insert(TABLE_USERWORKOUT, null, values);
+
+
 
         //Add some workout data for the user a
         values.clear();
@@ -600,7 +608,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_day, 1);
         values.put(userdata_excer, "decrease");
         values.put(userdata_set, 3);
-        values.put(userdata_reps, 5);
+        values.put(userdata_reps, 4); //here is the decrease
         values.put(userdata_weight, 47.5);
         values.put(userdata_date, 2017050755);
         db.insert(TABLE_USERDATA, null, values);
@@ -633,7 +641,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_day, 1);
         values.put(userdata_excer, "percentage");
         values.put(userdata_set, 3);
-        values.put(userdata_reps, 5);
+        values.put(userdata_reps, 4); //here is the decrease
         values.put(userdata_weight, 57.5);
         values.put(userdata_date, 2017050755);
         db.insert(TABLE_USERDATA, null, values);
@@ -655,7 +663,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_day, 1);
         values.put(userdata_excer, "body");
         values.put(userdata_set, 2);
-        values.put(userdata_reps, 5);
+        values.put(userdata_reps, 4); //here is the decrease
         values.put(userdata_weight, 65.0);
         values.put(userdata_date, 2017050755);
         db.insert(TABLE_USERDATA, null, values);
@@ -672,7 +680,73 @@ public class DBManager extends SQLiteOpenHelper {
         db.insert(TABLE_USERDATA, null, values);
 
 
+        //day 4
 
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "decrease");
+        values.put(userdata_set, 1);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 45.0);
+        values.put(userdata_date, 2017050788);
+        db.insert(TABLE_USERDATA, null, values);
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "decrease");
+        values.put(userdata_set, 2);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 45.0);
+        values.put(userdata_date, 2017050788);
+        db.insert(TABLE_USERDATA, null, values);
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "decrease");
+        values.put(userdata_set, 3);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 45.0);
+        values.put(userdata_date, 2017050788);
+        db.insert(TABLE_USERDATA, null, values);
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "percentage");
+        values.put(userdata_set, 1);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 44.55);
+        values.put(userdata_date, 2017050788);
+        db.insert(TABLE_USERDATA, null, values);
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "percentage");
+        values.put(userdata_set, 2);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 44.55);
+        values.put(userdata_date, 2017050788);
+        db.insert(TABLE_USERDATA, null, values);
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "percentage");
+        values.put(userdata_set, 3);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 44.55);
+        values.put(userdata_date, 2017050788);
+        db.insert(TABLE_USERDATA, null, values);
 
         //defaults (user, workout, day, excer, weight)
         //add the data for the defaults table
@@ -1024,7 +1098,7 @@ public class DBManager extends SQLiteOpenHelper {
 
                     if (e.getString(e.getColumnIndex(exer_useweights)).equals("1")) {
                         float change = completed(user, workout, c.getString(c.getColumnIndex(userdata_day))
-                                , c.getString(c.getColumnIndex(userdata_excer)), date,
+                                , c.getString(c.getColumnIndex(userdata_excer)), lastDate,
                                 Integer.parseInt(d.getString(d.getColumnIndex(workdetails_sets))),
                                 thereps);
                         float newWeight;
@@ -1167,6 +1241,18 @@ public class DBManager extends SQLiteOpenHelper {
             //we are increasing
             //todo: check if they actually did it, we are just increaseing every time here. maybe do a query on the reps and see if
             //we get the number of sets back? not sure
+            query = "SELECT * FROM " + TABLE_USERDATA + " WHERE " + userdata_user + " = \"" + user + "\" AND " +
+                    userdata_workout + " = \"" + workout + "\" AND " + userdata_day + " = \"" + day + "\" AND " +
+                    userdata_excer + " = \"" + excer + "\" AND " + userdata_date + " = \"" + date + "\";";
+            Cursor d = db.rawQuery(query, null);
+            d.moveToFirst();
+
+            while (!d.isAfterLast()) {
+                if (Integer.parseInt(d.getString(d.getColumnIndex(userdata_reps))) != reps) {
+                    return 0;
+                }
+                d.moveToNext();
+            }
             return inc;
         } else {
             return dec;
