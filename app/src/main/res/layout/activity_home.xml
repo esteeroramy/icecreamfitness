@@ -35,6 +35,7 @@
         android:layout_above="@+id/bottom_navigation"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
+        android:padding="0dp"
         />
 
 

@@ -1,5 +1,6 @@
 package com.example.ramy.icecreamfitness;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +40,7 @@ public class Dashboard extends AppCompatActivity {
             //getting the information
 
 
-            TextView body = new TextView(this); //the dta to display TODO: could make it all vertical
+            TextView body = new TextView(this); //the dta to display
             body.setTypeface(Typeface.MONOSPACE);
             body.setText(dbManager.getLastExer(Home.user, lastDate, Home.workoutName));
             body.setTextSize(14);
@@ -70,7 +71,7 @@ public class Dashboard extends AppCompatActivity {
         );
 
         TextView body1 = new TextView(this); //the information to display
-        body1.setText(dbManager.getNextExer(Home.user, lastDate, Home.workoutName));
+        body1.setText(dbManager.getNextExer(Home.user, Home.workoutName));
         body1.setTextSize(14);
         body1.setTypeface(Typeface.MONOSPACE);
         body1.setTextColor(Color.BLACK);
@@ -82,5 +83,14 @@ public class Dashboard extends AppCompatActivity {
         body1Layout.addRule(RelativeLayout.BELOW, headder1.getId());
         myLayout1.addView(headder1, headder1Layout);
         myLayout1.addView(body1, body1Layout);
+        myLayout1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //workoutName = ((TextView) v.findViewById(9)).getText().toString();
+                Intent i;
+                i = new Intent(Dashboard.this, Workout.class);
+                startActivity(i);
+            }
+        });
     }
 }

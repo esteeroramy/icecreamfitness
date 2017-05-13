@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class DBManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 41;
+    private static final int DATABASE_VERSION = 53;
     private static final String DATABASE_NAME = "fitness.db";
 
     //This is the users table
@@ -285,6 +285,18 @@ public class DBManager extends SQLiteOpenHelper {
         values.clear();
         values.put(workdetails_name, "workout1");
         values.put(workdetails_day, 2);
+        values.put(workdetails_excer, "increase");
+        values.put(workdetails_sets, 3);
+        values.put(workdetails_reps, 5);
+        values.put(workdetails_inc, 2.5);
+        values.put(workdetails_otherday, 0);
+        values.put(workdetails_dec, 0.0);
+        values.put(workdetails_failure, 0);
+        db.insert(TABLE_WORKDETAILS, null, values);
+
+        values.clear();
+        values.put(workdetails_name, "workout1");
+        values.put(workdetails_day, 2);
         values.put(workdetails_excer, "decrease");
         values.put(workdetails_sets, 3);
         values.put(workdetails_reps, 5);
@@ -302,7 +314,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(workdetails_reps, 5);
         values.put(workdetails_inc, 0.0);
         values.put(workdetails_otherday, 1);
-        values.put(workdetails_dec, 0.1);
+        values.put(workdetails_dec, -0.1);
         values.put(workdetails_failure, 0);
         db.insert(TABLE_WORKDETAILS, null, values);
 
@@ -319,7 +331,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userworkout_day, 1);
         values.put(userworkout_date, 2017050722);
         db.insert(TABLE_USERWORKOUT, null, values);
-
+/*
         values.clear();
         values.put(userworkout_user, "a");
         values.put(userworkout_name, "workout1");
@@ -340,7 +352,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userworkout_day, 2);
         values.put(userworkout_date, 2017050788);
         db.insert(TABLE_USERWORKOUT, null, values);
-
+*/
 
 
         //Add some workout data for the user a
@@ -350,7 +362,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_day, 1);
         values.put(userdata_excer, "increase");
         values.put(userdata_set, 1);
-        values.put(userdata_reps, 5);
+        values.put(userdata_reps, 4);  //failed set
         values.put(userdata_weight, 35.0);
         values.put(userdata_date, 2017050722);
         db.insert(TABLE_USERDATA, null, values);
@@ -479,6 +491,41 @@ public class DBManager extends SQLiteOpenHelper {
 
         //day 2
 
+
+/*
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "increase");
+        values.put(userdata_set, 1);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 37.5);
+        values.put(userdata_date, 2017050752);
+        db.insert(TABLE_USERDATA, null, values);
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "increase");
+        values.put(userdata_set, 2);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 37.5);
+        values.put(userdata_date, 2017050752);
+        db.insert(TABLE_USERDATA, null, values);
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "increase");
+        values.put(userdata_set, 3);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 37.5);
+        values.put(userdata_date, 2017050752);
+        db.insert(TABLE_USERDATA, null, values);
+
         values.clear();
         values.put(userdata_user, "a");
         values.put(userdata_workout, "workout1");
@@ -554,7 +601,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_excer, "increase");
         values.put(userdata_set, 1);
         values.put(userdata_reps, 5);
-        values.put(userdata_weight, 37.5);
+        values.put(userdata_weight, 40.0);
         values.put(userdata_date, 2017050755);
         db.insert(TABLE_USERDATA, null, values);
 
@@ -565,7 +612,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_excer, "increase");
         values.put(userdata_set, 2);
         values.put(userdata_reps, 5);
-        values.put(userdata_weight, 37.5);
+        values.put(userdata_weight, 40.0);
         values.put(userdata_date, 2017050755);
         db.insert(TABLE_USERDATA, null, values);
 
@@ -576,7 +623,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_excer, "increase");
         values.put(userdata_set, 3);
         values.put(userdata_reps, 5);
-        values.put(userdata_weight, 37.5);
+        values.put(userdata_weight, 40.0);
         values.put(userdata_date, 2017050755);
         db.insert(TABLE_USERDATA, null, values);
 
@@ -608,7 +655,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_day, 1);
         values.put(userdata_excer, "decrease");
         values.put(userdata_set, 3);
-        values.put(userdata_reps, 4); //here is the decrease
+        values.put(userdata_reps, 5);
         values.put(userdata_weight, 47.5);
         values.put(userdata_date, 2017050755);
         db.insert(TABLE_USERDATA, null, values);
@@ -641,7 +688,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_day, 1);
         values.put(userdata_excer, "percentage");
         values.put(userdata_set, 3);
-        values.put(userdata_reps, 4); //here is the decrease
+        values.put(userdata_reps, 5);
         values.put(userdata_weight, 57.5);
         values.put(userdata_date, 2017050755);
         db.insert(TABLE_USERDATA, null, values);
@@ -663,7 +710,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_day, 1);
         values.put(userdata_excer, "body");
         values.put(userdata_set, 2);
-        values.put(userdata_reps, 4); //here is the decrease
+        values.put(userdata_reps, 5);
         values.put(userdata_weight, 65.0);
         values.put(userdata_date, 2017050755);
         db.insert(TABLE_USERDATA, null, values);
@@ -686,6 +733,40 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_user, "a");
         values.put(userdata_workout, "workout1");
         values.put(userdata_day, 2);
+        values.put(userdata_excer, "increase");
+        values.put(userdata_set, 1);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 42.5);
+        values.put(userdata_date, 2017050788);
+        db.insert(TABLE_USERDATA, null, values);
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "increase");
+        values.put(userdata_set, 2);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 42.5);
+        values.put(userdata_date, 2017050788);
+        db.insert(TABLE_USERDATA, null, values);
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
+        values.put(userdata_excer, "increase");
+        values.put(userdata_set, 3);
+        values.put(userdata_reps, 5);
+        values.put(userdata_weight, 42.5);
+        values.put(userdata_date, 2017050788);
+        db.insert(TABLE_USERDATA, null, values);
+
+
+        values.clear();
+        values.put(userdata_user, "a");
+        values.put(userdata_workout, "workout1");
+        values.put(userdata_day, 2);
         values.put(userdata_excer, "decrease");
         values.put(userdata_set, 1);
         values.put(userdata_reps, 5);
@@ -722,7 +803,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_excer, "percentage");
         values.put(userdata_set, 1);
         values.put(userdata_reps, 5);
-        values.put(userdata_weight, 44.55);
+        values.put(userdata_weight, 51.75);
         values.put(userdata_date, 2017050788);
         db.insert(TABLE_USERDATA, null, values);
 
@@ -733,7 +814,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_excer, "percentage");
         values.put(userdata_set, 2);
         values.put(userdata_reps, 5);
-        values.put(userdata_weight, 44.55);
+        values.put(userdata_weight, 51.75);
         values.put(userdata_date, 2017050788);
         db.insert(TABLE_USERDATA, null, values);
 
@@ -744,10 +825,10 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_excer, "percentage");
         values.put(userdata_set, 3);
         values.put(userdata_reps, 5);
-        values.put(userdata_weight, 44.55);
+        values.put(userdata_weight, 51.75);
         values.put(userdata_date, 2017050788);
         db.insert(TABLE_USERDATA, null, values);
-
+*/
         //defaults (user, workout, day, excer, weight)
         //add the data for the defaults table
         values.clear();
@@ -824,7 +905,6 @@ public class DBManager extends SQLiteOpenHelper {
 
     public boolean login(String user, String pass) {
         SQLiteDatabase db = getWritableDatabase();
-        System.out.println("testing");
         String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + users_user + "=\"" + user
                 + "\" and " + users_pass + "=\"" + pass + "\";";
 
@@ -933,11 +1013,13 @@ public class DBManager extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
 
-        int lasyDay = getLastDay(workout, user);
-        if (lasyDay == Integer.parseInt(c.getString(c.getColumnIndex(workouts_days)).toString())) {
+        int lastDay = getLastDay(workout, user);
+        if (lastDay == Integer.parseInt(c.getString(c.getColumnIndex(workouts_days)).toString())) {
+            return 1;
+        } else if (lastDay == -1) {
             return 1;
         } else {
-            return lasyDay + 1;
+            return lastDay + 1;
         }
     }
 
@@ -957,6 +1039,187 @@ public class DBManager extends SQLiteOpenHelper {
             return -1;
         }
     }
+
+    public String getDefaults(String user, String workout, String excer) {
+        String query;
+        SQLiteDatabase db = getWritableDatabase();
+
+        //userdata (user, workout, day, excer, set, reps, weight, date)
+        query = "SELECT " + defaults_weight + " FROM " + TABLE_DEFAULTS
+                + " WHERE " + defaults_user + " = \"" + user + "\" AND " + defaults_excer
+                + " = \"" + excer + "\" AND " + defaults_workout +
+                " = \"" + workout + "\"";
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        return c.getString(c.getColumnIndex(defaults_weight));
+    }
+
+    //TODO: HERE IS WHERE THINGS HAVE TO CHANGE ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+   // public String getLastExer(String user, int date, String workout) {
+   //     return "";
+   // }
+
+    public String getNextExer(String user, String workout) {
+        String query;
+        SQLiteDatabase db = getWritableDatabase();
+        String bigReturn = "";
+
+
+        /*
+        DATABASE SCHEMA
+
+        users (user, pass, email)
+        loggedin (user)
+        excer (name, useweights)
+        workouts (name, days)
+        workdetails (name, day, excer, sets, reps, inc, otherday, dec, failure)
+        userwork (user, workout)
+        userworkout (user, name, day, date)
+        userdata (user, workout, day, excer, set, reps, weight, date)
+        defaults (user, workout, day, excer, weight)
+
+        weight (user, weight, date)
+
+         */
+        query = "SELECT * FROM " + TABLE_WORKDETAILS + " WHERE " + workdetails_name + " = \"" + workout
+            + "\" AND " + workdetails_day + " = \"" + getNextDay(workout, user) + "\";";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        while (! c.isAfterLast()) {
+            query = "SELECT " + exer_useweights + " FROM " + TABLE_EXER + " WHERE "
+                    + exer_name + " = \"" + c.getString(c.getColumnIndex(userdata_excer)) + "\";";
+            Cursor d = db.rawQuery(query, null);
+            d.moveToFirst();
+
+            //Formatting the return
+            bigReturn += ("  " + c.getString(c.getColumnIndex(userdata_excer))
+            );
+
+            for (int i = 0; i < 15 - c.getString(c.getColumnIndex(userdata_excer)).length(); i++) {
+                bigReturn += " ";
+            }
+
+            int thereps;
+            if (c.getString(c.getColumnIndex(workdetails_failure)).equals("1")) {
+                bigReturn += "  " + c.getString(c.getColumnIndex(workdetails_sets)) + "xFAIL";
+                for (int i = 0; i < 6 - (c.getString(c.getColumnIndex(workdetails_sets)) + "xFAIL").length(); i++) {
+                    bigReturn += " ";
+                }
+                thereps = -1;
+            } else {
+                bigReturn += "  " + c.getString(c.getColumnIndex(workdetails_sets)) + "x" +
+                        c.getString(c.getColumnIndex(workdetails_reps));
+                for (int i = 0; i < 6 - (c.getString(c.getColumnIndex(workdetails_sets)) + "x" +
+                        c.getString(c.getColumnIndex(workdetails_reps))).length(); i++) {
+                    bigReturn += " ";
+                }
+                thereps = Integer.parseInt(c.getString(c.getColumnIndex(workdetails_reps)));
+            }
+
+            if (d.getString(d.getColumnIndex(exer_useweights)).equals("1")) {
+
+                query = "SELECT MAX(" + userdata_date + ") AS " + userdata_date + ", * FROM " + TABLE_USERDATA
+                        + " WHERE " + userdata_user + " = \"" + user + "\" AND "
+                        + userdata_excer + " = \"" + c.getString(c.getColumnIndex(userdata_excer)) + "\" AND "
+                        + userdata_workout + " = \"" + workout + "\";";
+
+                Cursor e = db.rawQuery(query, null);
+                e.moveToFirst();
+
+
+                if (c.getString(c.getColumnIndex(workdetails_otherday)).equals("0")) {
+                    if (e.getString(e.getColumnIndex(userdata_weight)) == null) {
+                        bigReturn += "  " + getDefaults(user, workout, c.getString(c.getColumnIndex(workdetails_excer))) + "\n";
+                    } else {
+                        query = "SELECT * FROM " + TABLE_WORKDETAILS + " WHERE " + workdetails_name + " = \"" + workout
+                                + "\" AND " + workdetails_day + " = \"" + e.getString(e.getColumnIndex(userdata_day))
+                                + "\" AND " + workdetails_excer + " = \"" + e.getString(e.getColumnIndex(userdata_excer))+ "\";";
+                        Cursor g = db.rawQuery(query, null);
+                        g.moveToFirst();
+                        if (g.getString(g.getColumnIndex(workdetails_otherday)).equals("1")) {
+                            query = "SELECT MAX(" + userdata_date + ") AS " + userdata_date + ", * FROM " + TABLE_USERDATA
+                                    + " WHERE " + userdata_user + " = \"" + user + "\" AND "
+                                    + userdata_excer + " = \"" + c.getString(c.getColumnIndex(userdata_excer)) + "\" AND "
+                                    + userdata_workout + " = \"" + workout + "\" AND "
+                                    + userdata_day + " = \"" + getNextDay(workout, user) + "\";";
+
+                            Cursor h = db.rawQuery(query, null);
+                            h.moveToFirst();
+
+                            if (completed(user, workout, c.getString(c.getColumnIndex(workdetails_excer)), thereps)) {
+                                float inc = Float.parseFloat(c.getString(c.getColumnIndex(workdetails_inc)));
+                                bigReturn += "  " + (Float.parseFloat(h.getString(h.getColumnIndex(userdata_weight))) + inc) + "\n";
+                            } else {
+                                bigReturn += "  " + h.getString(h.getColumnIndex(userdata_weight)) + "\n";
+                            }
+                        } else {
+
+                            if (completed(user, workout, c.getString(c.getColumnIndex(workdetails_excer)), thereps)) {
+                                float inc = Float.parseFloat(c.getString(c.getColumnIndex(workdetails_inc)));
+                                bigReturn += "  " + (Float.parseFloat(e.getString(e.getColumnIndex(userdata_weight))) + inc) + "\n";
+                            } else {
+                                bigReturn += "  " + e.getString(e.getColumnIndex(userdata_weight)) + "\n";
+                            }
+                        }
+                    }
+                } else {
+                    query = "SELECT MAX(" + userdata_date + ") AS " + userdata_date + ", * FROM " + TABLE_USERDATA
+                            + " WHERE " + userdata_user + " = \"" + user + "\" AND "
+                            + userdata_excer + " = \"" + c.getString(c.getColumnIndex(workdetails_excer)) + "\" AND "
+                            + userdata_workout + " = \"" + workout + "\" AND "
+                            + userdata_day + " = \"" + c.getString(c.getColumnIndex(workdetails_otherday)) + "\";";
+                    Cursor f = db.rawQuery(query, null);
+                    f.moveToFirst();
+                    //System.out.println(c.getString(c.getColumnIndex(workdetails_dec)));
+
+
+                    float ch = Float.parseFloat(c.getString(c.getColumnIndex(workdetails_dec)));
+
+                    if (ch > -1.0 && ch < 1.0) {
+                        //percentage decrease
+                        bigReturn += "  " + (Float.parseFloat(f.getString(f.getColumnIndex(userdata_weight)))
+                                + (ch*Float.parseFloat(f.getString(f.getColumnIndex(userdata_weight))))) + "\n";
+                    } else {
+                        //other decrease
+                        bigReturn += "  " + (Float.parseFloat(f.getString(f.getColumnIndex(userdata_weight))) - ch) + "\n";
+                        //System.out.println(d.getString(d.getColumnIndex(userdata_weight)));
+                    }
+                }
+            } else {
+                bigReturn += "  BW\n";
+            }
+            c.moveToNext();
+        }
+        return bigReturn;
+    }
+
+    public boolean completed(String user, String workout, String excer, int reps) {
+
+        String query;
+        SQLiteDatabase db = getWritableDatabase();
+
+        query = "SELECT MAX(" + userdata_date + ") AS " + userdata_date + ", * FROM " + TABLE_USERDATA
+                + " WHERE " + userdata_user + " = \"" + user + "\" AND "
+                + userdata_excer + " = \"" + excer + "\" AND "
+                + userdata_workout + " = \"" + workout + "\";";
+
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        while (!c.isAfterLast()) {
+            if (Integer.parseInt(c.getString(c.getColumnIndex(userdata_reps))) != reps) {
+                return false;
+            }
+            c.moveToNext();
+        }
+        return true;
+    }
+
 
     //FUNCTIONS FOR THE USERDATA TABLE
     public String getLastExer(String user, int date, String workout) {
@@ -979,7 +1242,6 @@ public class DBManager extends SQLiteOpenHelper {
         String bigReturn = "";
 
         while (! c.isAfterLast()) {
-            System.out.println(c.getString(c.getColumnIndex(userdata_excer)) + c.getString(c.getColumnIndex(userdata_weight)));
             //workdetails (name, day, excer, sets, reps, inc, otherday, dec, failure)
             query = "SELECT " + workdetails_sets + ", " + workdetails_reps + ", " + workdetails_failure +
                     " FROM " + TABLE_WORKDETAILS + " WHERE " + workdetails_name + " = \"" + workout + "\" AND " +
@@ -988,15 +1250,11 @@ public class DBManager extends SQLiteOpenHelper {
 
             Cursor d = db.rawQuery(query, null);
             d.moveToFirst();
-            System.out.println(d.getString(d.getColumnIndex(workdetails_sets)) + "x"
-                    + d.getString(d.getColumnIndex(workdetails_reps)) + "x"
-                    + d.getString(d.getColumnIndex(workdetails_failure)));
 
             query = "SELECT " + exer_useweights + " FROM " + TABLE_EXER + " WHERE "
                     + exer_name + " = \"" + c.getString(c.getColumnIndex(userdata_excer)) + "\";";
             Cursor e = db.rawQuery(query, null);
             e.moveToFirst();
-            System.out.println("USE WEIGHTS " + e.getString(e.getColumnIndex(exer_useweights)));
 
             //Formatting the return
             bigReturn += ("  " + c.getString(c.getColumnIndex(userdata_excer))
@@ -1022,7 +1280,7 @@ public class DBManager extends SQLiteOpenHelper {
             if (e.getString(e.getColumnIndex(exer_useweights)).equals("1")) {
                 bigReturn += "  " + c.getString(c.getColumnIndex(userdata_weight));
             } else {
-                bigReturn += "  " + "BodyWeight";
+                bigReturn += "  " + "BW";
             }
 
             bigReturn += "\n";
@@ -1030,233 +1288,4 @@ public class DBManager extends SQLiteOpenHelper {
         }
         return bigReturn;
     }
-
-    public String getNextExer(String user, int date, String workout) {
-        String query;
-        SQLiteDatabase db = getWritableDatabase();
-        String bigReturn = "";
-        if (getLastDate(workout, user) == -1) {
-            return getNextDefaultsDay(user, date, workout, 1);
-        } else {
-            //find the next day
-            int lastDate = getLastDateDay(workout, user, getNextDay(workout, user));
-            if (lastDate != -1) {
-                //increment those stats;
-
-                query = "SELECT DISTINCT " + userdata_excer + ", " + userdata_weight + ", " + userdata_day + " FROM " + TABLE_USERDATA
-                        + " WHERE " + userdata_workout + " = \"" + workout + "\" AND " + userdata_date +
-                        " = \"" + lastDate + "\" AND " + userdata_user + " = \"" + user + "\"";
-
-
-                Cursor c = db.rawQuery(query, null);
-                c.moveToFirst();
-
-                while (! c.isAfterLast()) {
-                    System.out.println(c.getString(c.getColumnIndex(userdata_excer)) + c.getString(c.getColumnIndex(userdata_weight)));
-                    //workdetails (name, day, excer, sets, reps, inc, otherday, dec, failure)
-                    query = "SELECT " + workdetails_sets + ", " + workdetails_reps + ", " + workdetails_failure +
-                            " FROM " + TABLE_WORKDETAILS + " WHERE " + workdetails_name + " = \"" + workout + "\" AND " +
-                            workdetails_day + " = \"" + c.getString(c.getColumnIndex(userdata_day)) + "\" AND " +
-                            workdetails_excer + " = \"" + c.getString(c.getColumnIndex(userdata_excer)) + "\";";
-
-                    Cursor d = db.rawQuery(query, null);
-                    d.moveToFirst();
-                    System.out.println(d.getString(d.getColumnIndex(workdetails_sets)) + "x"
-                            + d.getString(d.getColumnIndex(workdetails_reps)) + "x"
-                            + d.getString(d.getColumnIndex(workdetails_failure)));
-
-                    query = "SELECT " + exer_useweights + " FROM " + TABLE_EXER + " WHERE "
-                            + exer_name + " = \"" + c.getString(c.getColumnIndex(userdata_excer)) + "\";";
-                    Cursor e = db.rawQuery(query, null);
-                    e.moveToFirst();
-                    System.out.println("USE WEIGHTS " + e.getString(e.getColumnIndex(exer_useweights)));
-
-                    //Formatting the return
-                    bigReturn += ("  " + c.getString(c.getColumnIndex(userdata_excer))
-                    );
-
-                    for (int i = 0; i < 15 - c.getString(c.getColumnIndex(userdata_excer)).length(); i++) {
-                        bigReturn += " ";
-                    }
-
-                    int thereps;
-                    if (d.getString(d.getColumnIndex(workdetails_failure)).equals("1")) {
-                        bigReturn += "  " + d.getString(d.getColumnIndex(workdetails_sets)) + "xFAIL";
-                        for (int i = 0; i < 6 - (d.getString(d.getColumnIndex(workdetails_sets)) + "xFAIL").length(); i++) {
-                            bigReturn += " ";
-                        }
-                        thereps = -1;
-                    } else {
-                        bigReturn += "  " + d.getString(d.getColumnIndex(workdetails_sets)) + "x" +
-                                d.getString(d.getColumnIndex(workdetails_reps));
-                        for (int i = 0; i < 6 - (d.getString(d.getColumnIndex(workdetails_sets)) + "x" +
-                                d.getString(d.getColumnIndex(workdetails_reps))).length(); i++) {
-                            bigReturn += " ";
-                        }
-                        thereps = Integer.parseInt(d.getString(d.getColumnIndex(workdetails_reps)));
-                    }
-
-                    if (e.getString(e.getColumnIndex(exer_useweights)).equals("1")) {
-                        float change = completed(user, workout, c.getString(c.getColumnIndex(userdata_day))
-                                , c.getString(c.getColumnIndex(userdata_excer)), lastDate,
-                                Integer.parseInt(d.getString(d.getColumnIndex(workdetails_sets))),
-                                thereps);
-                        float newWeight;
-                        if (change > 0 && change < 1) {
-                            // percentage decrease
-                            newWeight = Float.parseFloat(c.getString(c.getColumnIndex(userdata_weight)));
-                            newWeight = newWeight - newWeight*change;
-                        } else {
-                            newWeight = Float.parseFloat(c.getString(c.getColumnIndex(userdata_weight)));
-                            newWeight += change;
-                        }
-                        bigReturn += "  " + newWeight;
-                    } else {
-                        bigReturn += "  " + "BodyWeight";
-                    }
-
-                    bigReturn += "\n";
-                    c.moveToNext();
-                }
-                return bigReturn;
-            } else {
-                //get the defaults
-                return getNextDefaultsDay(user, date, workout, getNextDay(workout, user));
-            }
-        }
-    }
-
-    //FUNCTIONS FOR THE DEFAULTS TABLE
-    //todo: some way to add defaults to new workouts added
-
-    public String getDefaults(String user, String workout, int day, String excer) {
-        String query;
-        SQLiteDatabase db = getWritableDatabase();
-
-        //userdata (user, workout, day, excer, set, reps, weight, date)
-        query = "SELECT " + defaults_weight + " FROM " + TABLE_DEFAULTS
-                + " WHERE " + defaults_user + " = \"" + user + "\" AND " + defaults_excer
-                + " = \"" + excer + "\" AND " + defaults_workout +
-                " = \"" + workout + "\" AND " + defaults_day + " = \"" + day + "\"";
-
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-
-        return c.getString(c.getColumnIndex(defaults_weight));
-    }
-
-    public String getNextDefaultsDay(String user, int date, String workout, int day) {
-        String query;
-        SQLiteDatabase db = getWritableDatabase();
-        String bigReturn = "";
-
-        //workdetails (name, day, excer, sets, reps, inc, otherday, dec, failure)
-        query = "SELECT " + workdetails_excer + ", " + workdetails_sets + ", "
-                + workdetails_reps + ", " + workdetails_inc + ", " + workdetails_otherday + ", "
-                + workdetails_dec + ", " + workdetails_failure + " FROM " + TABLE_WORKDETAILS
-                + " WHERE " + workdetails_name + " = \"" + workout + "\" AND " + workdetails_day +
-                " = \"" + day + "\";";
-
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-
-        while (! c.isAfterLast()) {
-            bigReturn += "  " + c.getString(c.getColumnIndex(workdetails_excer));
-            for (int i = 0; i < 15 - c.getString(c.getColumnIndex(workdetails_excer)).length(); i++) {
-                bigReturn += " ";
-            }
-
-            if (c.getString(c.getColumnIndex(workdetails_failure)).equals("0")) {
-                bigReturn += "  " + c.getString(c.getColumnIndex(workdetails_sets)) + "x"
-                        + c.getString(c.getColumnIndex(workdetails_reps));
-                for (int i = 0; i < 6 - (c.getString(c.getColumnIndex(workdetails_sets)) + "x"
-                        + c.getString(c.getColumnIndex(workdetails_reps))).length(); i++) {
-                    bigReturn += " ";
-                }
-            } else {
-                bigReturn += "  " + c.getString(c.getColumnIndex(workdetails_sets)) + "xFAIL";
-                for (int i = 0; i < 6 - (c.getString(c.getColumnIndex(workdetails_sets))
-                        + "xFAIL").length(); i++) {
-                    bigReturn += " ";
-                }
-            }
-
-            if (c.getString(c.getColumnIndex(workdetails_otherday)).equals("0")) {
-                bigReturn += "  " + getDefaults(user, workout, 1, c.getString(c.getColumnIndex(workdetails_excer))) + "\n";
-            } else {
-                //int lastDate = getLastDateDay(workout, user, getNextDay(workout, user));
-                query = "SELECT DISTINCT MAX(" + userdata_date + ") AS " + userdata_date + ","
-                        + userdata_weight + " FROM " + TABLE_USERDATA
-                        + " WHERE " + userdata_workout + " = \"" + workout + "\" AND "
-                        + userdata_user + " = \"" + user + "\" AND " +
-                        userdata_excer + " = \"" + c.getString(c.getColumnIndex(workdetails_excer)) + "\" AND " +
-                        userdata_day + " = \"" + c.getString(c.getColumnIndex(workdetails_otherday)) + "\";";
-
-                Cursor d = db.rawQuery(query, null);
-                d.moveToFirst();
-
-                float ch = Float.parseFloat(c.getString(c.getColumnIndex(workdetails_dec)));
-                System.out.println(ch);
-
-                if (ch > 0.0 && ch < 1.0) {
-                    //percentage decrease
-                    bigReturn += "  " + (Float.parseFloat(d.getString(d.getColumnIndex(userdata_weight)))
-                            - (ch*Float.parseFloat(d.getString(d.getColumnIndex(userdata_weight))))) + "\n";
-                } else {
-                    //other decrease
-                    bigReturn += "  " + (Float.parseFloat(d.getString(d.getColumnIndex(userdata_weight))) - ch) + "\n";
-                    //System.out.println(d.getString(d.getColumnIndex(userdata_weight)));
-                }
-
-            }
-
-            c.moveToNext();
-        }
-
-        return bigReturn;
-    }
-
-    public float completed(String user, String workout, String day, String excer, int date, int sets, int reps) {
-        //workdetails (name, day, excer, sets, reps, inc, otherday, dec, failure)
-        //userdata (user, workout, day, excer, set, reps, weight, date)
-        String query;
-        SQLiteDatabase db = getWritableDatabase();
-
-        query = "SELECT " + workdetails_inc + ", " + workdetails_otherday  + ", " + workdetails_dec + " FROM " + TABLE_WORKDETAILS
-                + " WHERE " + workdetails_name + " = \"" + workout + "\" AND "
-                + workdetails_excer + " = \"" + excer + "\" AND "
-                + workdetails_day + " = \"" + day + "\";";
-
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-
-        float inc = Float.parseFloat(c.getString(c.getColumnIndex(workdetails_inc)));
-        float dec = Float.parseFloat(c.getString(c.getColumnIndex(workdetails_dec)));
-        int otherday = Integer.parseInt(c.getString(c.getColumnIndex(workdetails_otherday)));
-
-        System.out.println(inc);
-        System.out.println(dec);
-        System.out.println(otherday);
-        if (inc > 0.0) {
-            //we are increasing
-            //todo: check if they actually did it, we are just increaseing every time here. maybe do a query on the reps and see if
-            //we get the number of sets back? not sure
-            query = "SELECT * FROM " + TABLE_USERDATA + " WHERE " + userdata_user + " = \"" + user + "\" AND " +
-                    userdata_workout + " = \"" + workout + "\" AND " + userdata_day + " = \"" + day + "\" AND " +
-                    userdata_excer + " = \"" + excer + "\" AND " + userdata_date + " = \"" + date + "\";";
-            Cursor d = db.rawQuery(query, null);
-            d.moveToFirst();
-
-            while (!d.isAfterLast()) {
-                if (Integer.parseInt(d.getString(d.getColumnIndex(userdata_reps))) != reps) {
-                    return 0;
-                }
-                d.moveToNext();
-            }
-            return inc;
-        } else {
-            return dec;
-        }
-    }
-
 }

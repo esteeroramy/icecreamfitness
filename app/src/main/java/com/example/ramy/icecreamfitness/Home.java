@@ -171,3 +171,27 @@ public class Home extends AppCompatActivity {
 
     }
 }
+
+/*TODO list
+Be able to add exercises
+Be able to add workouts
+Add division of weight
+Add proper rounding of numbers (for lbs and for kgs)
+Be able to delete workouts
+Do conversions between kg and lbs and show both on home screen?
+Add a back button to every page that can go back
+Add a delete workout button for the workout page
+Be able to see the history of exercises given a workout (drop down of the user's workouts)
+Be able to see progress for different exercises
+Change timing of workouts to be like YYMMDDHHMM (year month day hour minute)
+Add date of the workout to the previous section and the top of the workout
+
+Add a temporary section for the currect workout so that you can close out of the app and come back in at any time to continue a workout
+Add the settings page
+Add the profile page
+
+Forgot password option?
+Fix app icon
+Fix app name
+Logout button
+ */
