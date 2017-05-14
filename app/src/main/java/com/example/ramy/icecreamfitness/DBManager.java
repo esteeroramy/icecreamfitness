@@ -9,7 +9,7 @@ DATABASE SCHEMA
 
 users (user, pass, email)
 loggedin (user)
-excer (name, useweights)
+excer (name, useweights, split)
 workouts (name, days)
 workdetails (name, day, excer, sets, reps, inc, otherday, dec, failure)
 userwork (user, workout)
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class DBManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 53;
+    private static final int DATABASE_VERSION = 56;
     private static final String DATABASE_NAME = "fitness.db";
 
     //This is the users table
@@ -56,6 +56,7 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String exer_id = "_id";
     public static final String exer_name = "name";
     public static final String exer_useweights = "useweights";
+    public static final String exer_split = "split";
 
     //This is the workouts table
     //workouts (name, days)
@@ -141,7 +142,8 @@ public class DBManager extends SQLiteOpenHelper {
         query = "CREATE TABLE " + TABLE_EXER + "(" +
                 exer_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 exer_name + " TEXT, " +
-                exer_useweights + " INTEGER" +
+                exer_useweights + " INTEGER, " +
+                exer_split + " INTEGER" +
                 ");";
         db.execSQL(query);
 
@@ -209,21 +211,25 @@ public class DBManager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(exer_name, "increase");
         values.put(exer_useweights, 1);
+        values.put(exer_split, 1);
         db.insert(TABLE_EXER, null, values);
 
         values.clear();
         values.put(exer_name, "decrease");
         values.put(exer_useweights, 1);
+        values.put(exer_split, 1);
         db.insert(TABLE_EXER, null, values);
 
         values.clear();
         values.put(exer_name, "percentage");
         values.put(exer_useweights, 1);
+        values.put(exer_split, 0);
         db.insert(TABLE_EXER, null, values);
 
         values.clear();
         values.put(exer_name, "body");
         values.put(exer_useweights, 0);
+        values.put(exer_split, 0);
         db.insert(TABLE_EXER, null, values);
 
         //Add all the workouts
@@ -231,6 +237,13 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(workouts_name, "workout1");
         values.put(workouts_days, 2);
         db.insert(TABLE_WORKOUTS, null, values);
+
+        values.clear();
+        values.put(workouts_name, "workout2");
+        values.put(workouts_days, 3);
+        db.insert(TABLE_WORKOUTS, null, values);
+
+
 
         //Add all the workout details
         values.clear();
@@ -317,6 +330,74 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(workdetails_dec, -0.1);
         values.put(workdetails_failure, 0);
         db.insert(TABLE_WORKDETAILS, null, values);
+
+
+
+
+
+
+
+        values.clear();
+        values.put(workdetails_name, "workout2");
+        values.put(workdetails_day, 1);
+        values.put(workdetails_excer, "increase");
+        values.put(workdetails_sets, 3);
+        values.put(workdetails_reps, 5);
+        values.put(workdetails_inc, 2.5);
+        values.put(workdetails_otherday, 0);
+        values.put(workdetails_dec, 0.0);
+        values.put(workdetails_failure, 0);
+        db.insert(TABLE_WORKDETAILS, null, values);
+
+        values.clear();
+        values.put(workdetails_name, "workout2");
+        values.put(workdetails_day, 1);
+        values.put(workdetails_excer, "decrease");
+        values.put(workdetails_sets, 3);
+        values.put(workdetails_reps, 5);
+        values.put(workdetails_inc, 2.5);
+        values.put(workdetails_otherday, 0);
+        values.put(workdetails_dec, 0.0);
+        values.put(workdetails_failure, 0);
+        db.insert(TABLE_WORKDETAILS, null, values);
+
+        values.clear();
+        values.put(workdetails_name, "workout2");
+        values.put(workdetails_day, 2);
+        values.put(workdetails_excer, "percentage");
+        values.put(workdetails_sets, 3);
+        values.put(workdetails_reps, 5);
+        values.put(workdetails_inc, 2.5);
+        values.put(workdetails_otherday, 0);
+        values.put(workdetails_dec, 0.0);
+        values.put(workdetails_failure, 0);
+        db.insert(TABLE_WORKDETAILS, null, values);
+
+        values.clear();
+        values.put(workdetails_name, "workout2");
+        values.put(workdetails_day, 3);
+        values.put(workdetails_excer, "body");
+        values.put(workdetails_sets, 3);
+        values.put(workdetails_reps, 5);
+        values.put(workdetails_inc, 2.5);
+        values.put(workdetails_otherday, 0);
+        values.put(workdetails_dec, 0.0);
+        values.put(workdetails_failure, 0);
+        db.insert(TABLE_WORKDETAILS, null, values);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //Add all the workouts for users
         values.clear();
@@ -1287,5 +1368,91 @@ public class DBManager extends SQLiteOpenHelper {
             c.moveToNext();
         }
         return bigReturn;
+    }
+
+    public ArrayList<String> AvailableExers(String user){
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT " + workouts_name + " FROM " + TABLE_WORKOUTS + " WHERE "
+                + workouts_name + " not in ( SELECT " + userworkout_name + " FROM "
+                + TABLE_USERWORKOUT + " WHERE " + userworkout_user + " = \"" + user + "\");";
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        ArrayList<String> toReturn = new ArrayList<>();
+        while (!c.isAfterLast()) {
+            toReturn.add(c.getString(c.getColumnIndex(exer_name)));
+            c.moveToNext();
+        }
+        return toReturn;
+    }
+
+    //workouts (name, days)
+    //workdetails (name, day, excer, sets, reps, inc, otherday, dec, failure)
+
+    public String getWorkoutDetails(String workout) {
+        String toReturn = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT " + workouts_days + " FROM " + TABLE_WORKOUTS + " WHERE "
+                + workouts_name + "= \"" + workout + "\";";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        toReturn += workout + ":\n\n";
+        if (c.getString(c.getColumnIndex(workouts_days)).equals("1")) {
+            toReturn += "Total: " + c.getString(c.getColumnIndex(workouts_days)) + " Day\n";
+        } else {
+            toReturn += "Total: " + c.getString(c.getColumnIndex(workouts_days)) + " Days\n";
+        }
+        Cursor d;
+        for (int i = 1; i < Integer.parseInt(c.getString(c.getColumnIndex(workouts_days)))+1; i++) {
+            query = "SELECT * FROM " + TABLE_WORKDETAILS + " WHERE " + workdetails_name + " = \"" + workout + "\" AND "
+                    + workdetails_day + " = \"" + Integer.toString(i) + "\";";
+            d = db.rawQuery(query, null);
+            d.moveToFirst();
+            toReturn += "Day " + Integer.toString(i) + ":\n";
+
+            while (!d.isAfterLast()) {
+                toReturn += "  " + d.getString(d.getColumnIndex(workdetails_excer));
+                for (int j = 0; j < 15 - d.getString(d.getColumnIndex(workdetails_excer)).length(); j++) {
+                    toReturn += " ";
+                }
+
+                if (d.getString(d.getColumnIndex(workdetails_failure)).equals("1")) {
+                    toReturn += "  " + d.getString(d.getColumnIndex(workdetails_sets)) + "xFAIL";
+                    for (int j = 0; j < 6 - (d.getString(d.getColumnIndex(workdetails_sets)) + "xFAIL").length(); j++) {
+                        toReturn += " ";
+                    }
+                } else {
+                    toReturn += "  " + d.getString(d.getColumnIndex(workdetails_sets)) + "x" +
+                            d.getString(d.getColumnIndex(workdetails_reps));
+                    for (int j = 0; j < 6 - (d.getString(d.getColumnIndex(workdetails_sets)) + "x" +
+                            d.getString(d.getColumnIndex(workdetails_reps))).length(); j++) {
+                        toReturn += " ";
+                    }
+                }
+
+                toReturn += "\n";
+                d.moveToNext();
+            }
+        }
+        return toReturn;
+    }
+
+
+    public ArrayList<String> getExercises(String workout) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor d;
+        String query = "SELECT DISTINCT " + workdetails_excer + " FROM " + TABLE_WORKDETAILS + " WHERE " + workdetails_name + " = \"" + workout + "\" AND "
+                + workdetails_excer + " not in (SELECT " + exer_name + " FROM " + TABLE_EXER + " WHERE " + exer_useweights + " = \"0\");";
+        d = db.rawQuery(query, null);
+        d.moveToFirst();
+
+        ArrayList<String> toReturn = new ArrayList<>();
+
+        while (!d.isAfterLast()) {
+            toReturn.add(d.getString(d.getColumnIndex(workdetails_excer)));
+            d.moveToNext();
+        }
+        return toReturn;
     }
 }

@@ -165,7 +165,9 @@ public class Home extends AppCompatActivity {
         final Button add = (Button) findViewById(R.id.adding);
         add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO: how can I add workouts?
+                Intent i;
+                i = new Intent(Home.this, SelectExercises.class);
+                startActivity(i);
             }
         });
 
@@ -175,7 +177,7 @@ public class Home extends AppCompatActivity {
 /*TODO list
 Be able to add exercises
 Be able to add workouts
-Add division of weight
+Add division of weight on button click
 Add proper rounding of numbers (for lbs and for kgs)
 Be able to delete workouts
 Do conversions between kg and lbs and show both on home screen?
@@ -186,7 +188,7 @@ Be able to see progress for different exercises
 Change timing of workouts to be like YYMMDDHHMM (year month day hour minute)
 Add date of the workout to the previous section and the top of the workout
 
-Add a temporary section for the currect workout so that you can close out of the app and come back in at any time to continue a workout
+Add a temporary section for the currect workout so that you can close out of the app and come back  at any time to continue a workout
 Add the settings page
 Add the profile page
 
