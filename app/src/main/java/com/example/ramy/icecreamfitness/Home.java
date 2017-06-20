@@ -32,6 +32,7 @@ import java.util.Date;
 public class Home extends AppCompatActivity {
 
     DBManager dbManager;
+    public static int day;
     public static String workoutName;
     public static String user;
 
@@ -84,6 +85,7 @@ public class Home extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     workoutName = ((TextView) v.findViewById(9)).getText().toString();
+                    day = dbManager.getNextDay(Home.workoutName, Home.user);
                     Intent i;
                     i = new Intent(Home.this, Dashboard.class);
                     startActivity(i);

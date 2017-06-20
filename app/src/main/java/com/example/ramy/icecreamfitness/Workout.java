@@ -15,7 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.WindowManager;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +27,7 @@ public class Workout extends AppCompatActivity {
 
     DBManager dbManager;
     public String var;
+    public RelativeLayout mainLayout;
 
 
     @Override
@@ -39,7 +44,7 @@ public class Workout extends AppCompatActivity {
         Button submit;
         RelativeLayout.LayoutParams submitLayout;
 
-        RelativeLayout mainLayout = (RelativeLayout)findViewById(R.id.mainhere);
+        mainLayout = (RelativeLayout)findViewById(R.id.mainhere);
 
         android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
 
@@ -327,6 +332,67 @@ public class Workout extends AppCompatActivity {
                 //nothing for now TODO: add the workout to the workouts of the user
                 //TODO: add the workout details
                 //TODO: the time thing
+                String addName;
+                String addWorkout;
+                String addExer;
+                int addDay;
+                int addDate;
+                float addweight;
+                int addset;
+                int addreps;
+
+                DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmm");
+                Date date = new Date();
+                addDate = Integer.parseInt(dateFormat.format(date));
+
+                addName = Home.user;
+                addWorkout = Home.workoutName;
+                addDay = Home.day;
+                String thedata = dbManager.getNextExer(Home.user, Home.workoutName);
+                String pattern = "\\s*(.+?)\\s*(\\d+)x(.+?)\\s*(.+)";
+                Pattern r = Pattern.compile(pattern);
+                Matcher m = r.matcher(thedata);
+
+                dbManager.saveWorkout(addName, addWorkout, addDay, addDate);
+                int i = 10;
+                while (m.find()) {
+                    addExer =  m.group(1);
+
+                    RelativeLayout theLayout = (RelativeLayout) findViewById(i);
+
+                    if (!m.group(4).equals("BW")) {
+                        addweight = Float.parseFloat(((TextView) theLayout.findViewById(4)).getText().toString());
+                    } else {
+                        addweight = (float) 0.0;
+                    }
+
+
+
+                    //Button elements
+                    for (int j = 100; j < 100 + Integer.parseInt(m.group(2)); j++) {
+                        addset = j-99;
+                        RelativeLayout buttons = ((RelativeLayout) theLayout.findViewById(7));
+
+                        if (!m.group(3).equals("FAIL")) {
+                            if (!((Button) buttons.findViewById(j)).getText().equals("")) {
+                                addreps = Integer.parseInt(((Button) buttons.findViewById(j)).getText().toString());
+                            } else {
+                                addreps = 0;
+                            }
+                        } else {
+                            if (!((EditText) buttons.findViewById(j)).getText().toString().trim().equals("")) {
+                                addreps = Integer.parseInt(((EditText) buttons.findViewById(j)).getText().toString());
+                            } else {
+                                addreps = 0;
+                            }
+                        }
+                        dbManager.saveExer(addName, addWorkout, addDay, addExer, addset, addreps, addweight, addDate);
+                    }
+                    i += 1;
+                }
+                Intent intent;
+                intent = new Intent(Workout.this, Home.class);
+                startActivity(intent);
             }
         });
     }

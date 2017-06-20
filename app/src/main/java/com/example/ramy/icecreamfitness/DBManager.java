@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class DBManager extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 56;
+    private static final int DATABASE_VERSION = 60;
     private static final String DATABASE_NAME = "fitness.db";
 
     //This is the users table
@@ -404,7 +404,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userwork_user, "a");
         values.put(userwork_workout, "workout1");
         db.insert(TABLE_USERWORK, null, values);
-
+/*
         //Add some user workout days
         values.clear();
         values.put(userworkout_user, "a");
@@ -412,7 +412,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userworkout_day, 1);
         values.put(userworkout_date, 2017050722);
         db.insert(TABLE_USERWORKOUT, null, values);
-/*
+
         values.clear();
         values.put(userworkout_user, "a");
         values.put(userworkout_name, "workout1");
@@ -434,7 +434,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userworkout_date, 2017050788);
         db.insert(TABLE_USERWORKOUT, null, values);
 */
-
+/*
 
         //Add some workout data for the user a
         values.clear();
@@ -568,7 +568,7 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(userdata_weight, 65.0);
         values.put(userdata_date, 2017050722);
         db.insert(TABLE_USERDATA, null, values);
-
+*/
 
         //day 2
 
@@ -1454,5 +1454,35 @@ public class DBManager extends SQLiteOpenHelper {
             d.moveToNext();
         }
         return toReturn;
+    }
+
+    public void saveWorkout(String user, String workoutName, int day, int date){
+
+        ContentValues values = new ContentValues();
+        SQLiteDatabase db = getWritableDatabase();
+
+        values.put(userworkout_user, user);
+        values.put(userworkout_name, workoutName);
+        values.put(userworkout_day, day);
+        values.put(userworkout_date, date);
+        db.insert(TABLE_USERWORKOUT, null, values);
+
+    }
+
+    public void saveExer (String user, String workout, int day, String exer, int set, int reps, float weight, int date) {
+
+
+        ContentValues values = new ContentValues();
+        SQLiteDatabase db = getWritableDatabase();
+        values.put(userdata_user, user);
+        values.put(userdata_workout, workout);
+        values.put(userdata_day, day);
+        values.put(userdata_excer, exer);
+        values.put(userdata_set, set);
+        values.put(userdata_reps, reps);
+        values.put(userdata_weight, weight);
+        values.put(userdata_date, date);
+        db.insert(TABLE_USERDATA, null, values);
+
     }
 }
